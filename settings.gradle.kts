@@ -21,3 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "HarryPotter"
 include(":app")
+include(":data")
+include(":domain")
+include(":coreui")
+include(":presentation")
+include(":common")
