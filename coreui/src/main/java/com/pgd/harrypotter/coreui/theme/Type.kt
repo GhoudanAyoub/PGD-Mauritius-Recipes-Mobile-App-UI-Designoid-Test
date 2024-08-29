@@ -1,4 +1,4 @@
-package com.pgd.harrypotter.ui.theme
+package com.pgd.harrypotter.coreui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
