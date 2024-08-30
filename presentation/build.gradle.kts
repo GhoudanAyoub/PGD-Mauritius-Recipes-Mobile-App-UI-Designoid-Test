@@ -71,6 +71,8 @@ dependencies {
     implementation(libs.androidx.paging)
     implementation(libs.androidx.paging.compose)
 
+    implementation(libs.coil.compose)
+
     testImplementation(libs.junit)
     testImplementation(libs.mockk.test)
     testImplementation(libs.courintes.test)

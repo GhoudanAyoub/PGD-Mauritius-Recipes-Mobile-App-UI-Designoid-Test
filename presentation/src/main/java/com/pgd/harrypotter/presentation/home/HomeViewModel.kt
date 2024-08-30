@@ -30,13 +30,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getRecipeUseCase.invoke()
                 .distinctUntilChanged()
-                .collect { pokemonsData ->
-                    _RecipeState.value = when (pokemonsData) {
+                .collect { data ->
+                    _RecipeState.value = when (data) {
                         is RecipeRequestState.Loading -> HomeUiState.Loading
-                        is RecipeRequestState.Success -> HomeUiState.Success(pokemonsData.data)
+                        is RecipeRequestState.Success -> HomeUiState.Success(data.data)
                         is RecipeRequestState.Exception -> HomeUiState.Exception(
-                            pokemonsData.code,
-                            pokemonsData.exception
+                            data.code,
+                            data.exception
                         )
                     }
                 }

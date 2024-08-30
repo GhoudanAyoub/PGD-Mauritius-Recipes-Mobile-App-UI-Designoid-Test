@@ -8,5 +8,6 @@ data class Recipe(
     val rating: String,
     val description: String,
     val reviews: String,
-    val ingredients: List<Ingredient>
+    val ingredients: List<Ingredient>,
+    var servings: Int = 0,
 )
