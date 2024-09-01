@@ -1,46 +1,76 @@
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import com.pgd.harrypotter.coreui.components.HomeTabBarItem
 import com.pgd.harrypotter.coreui.components.RecipeItem
+import com.pgd.harrypotter.coreui.components.ReviewsSection
 import com.pgd.harrypotter.coreui.components.ServingsItem
 import com.pgd.harrypotter.coreui.components.ShoppingButton
 import com.pgd.harrypotter.domain.model.Recipe
+import kotlin.math.roundToInt
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeBody(
     recipe: Recipe,
+    scrollState: ScrollState,
+    toolbarOffsetHeightPx: Dp,
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-    Surface(
-        color = MaterialTheme.colorScheme.background,
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
     ) {
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .verticalScroll(rememberScrollState()),  // Add vertical scroll,
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Center
-//        ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Spacer(modifier = Modifier
+            .height(250.dp)
+            .offset {
+                IntOffset(x = 0, y = toolbarOffsetHeightPx.value.roundToInt())
+            })
+        RecipeItem(recipe = recipe)
+        ServingsItem(recipe = recipe)
+        HomeTabBarItem(recipe = recipe)
+        ShoppingButton()
+        ReviewsSection()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(120.dp)
+                .padding(8.dp)
         ) {
-            item { RecipeItem(recipe = recipe) }
-            item { ServingsItem(recipe = recipe) }
-            item { HomeTabBarItem(recipe = recipe) }
-            item { ShoppingButton() }
+            FloatingActionButton(
+                onClick = { /* Handle button click */ },
+                containerColor = Color(0xFFB21C55),
+                elevation = FloatingActionButtonDefaults.elevation(2.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .clip(RoundedCornerShape(20.dp))
+            ) {
+                Text("Start Cooking", color = Color.White)
+            }
         }
+
     }
-//    }
+
 }

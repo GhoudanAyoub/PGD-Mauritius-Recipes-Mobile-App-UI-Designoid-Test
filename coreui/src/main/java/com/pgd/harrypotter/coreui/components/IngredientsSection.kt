@@ -3,7 +3,7 @@ package com.pgd.harrypotter.coreui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -22,15 +22,15 @@ import com.pgd.harrypotter.domain.model.Recipe
 fun IngredientsSection(recipe: Recipe) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .heightIn(min = 200.dp, max = 500.dp)
             .padding(8.dp)
             .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top
     ) {
         LazyVerticalGrid(columns = GridCells.Fixed(3)) {
-            items(recipe.ingredients.count()) { pokemonItemIndex ->
-                val ingredient = recipe.ingredients[pokemonItemIndex]
+            items(recipe.ingredients.count()) { recipeItemIndex ->
+                val ingredient = recipe.ingredients[recipeItemIndex]
                 ingredient?.let { current ->
                     IngredientsItem(
                         ingredient = current

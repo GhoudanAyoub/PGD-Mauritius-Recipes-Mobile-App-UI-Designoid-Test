@@ -40,9 +40,9 @@ fun RecipeItem(
                 recipe.title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 28.sp,
-                fontFamily = MaterialTheme.typography.labelLarge.fontFamily
+                fontFamily = MaterialTheme.typography.titleMedium.fontFamily
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -57,6 +57,7 @@ fun RecipeItem(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_clock),
                         contentDescription = "Time",
+                        tint = Color(0xFFB21C55),
                         modifier = Modifier.size(24.dp)
                     )
                     Text(
@@ -75,6 +76,7 @@ fun RecipeItem(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_flame),
                         contentDescription = "Calories",
+                        tint = Color(0xFFB21C55),
                         modifier = Modifier.size(24.dp)
                     )
                     Text(
@@ -93,6 +95,7 @@ fun RecipeItem(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_star),
                         contentDescription = "Rating",
+                        tint = Color(0xFFB21C55), // Same color as the "See all" text
                         modifier = Modifier.size(24.dp)
                     )
                     Text(
@@ -109,7 +112,7 @@ fun RecipeItem(
                 recipe.description,
                 fontSize = 16.sp,
                 color = Color.Black,
-                fontFamily = MaterialTheme.typography.labelSmall.fontFamily
+                fontFamily = MaterialTheme.typography.bodyMedium.fontFamily
             )
         }
     }

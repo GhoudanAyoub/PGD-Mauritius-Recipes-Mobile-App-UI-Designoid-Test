@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -50,7 +52,7 @@ fun ServingsItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp)
-                        .background(Color.LightGray.copy(alpha = 0.2f), RoundedCornerShape(10.dp))
+                        .background(Color(0xBFF7F7F7), RoundedCornerShape(10.dp))
                         .padding(8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
@@ -73,7 +75,9 @@ fun ServingsItem(
                             ) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_minus),
-                                    contentDescription = "Decrease"
+                                    contentDescription = "Decrease",
+                                    tint = Color(0xFFB21C55),
+                                    modifier = Modifier.size(16.dp)
                                 )
                             }
                         }
@@ -92,8 +96,10 @@ fun ServingsItem(
                                 onClick = { count++ }
                             ) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.ic_plus),
-                                    contentDescription = "Increase"
+                                    imageVector = Icons.Filled.Add,
+                                    contentDescription = "plus",
+                                    tint = Color(0xFFB21C55),
+                                    modifier = Modifier.size(20.dp)
                                 )
                             }
                         }

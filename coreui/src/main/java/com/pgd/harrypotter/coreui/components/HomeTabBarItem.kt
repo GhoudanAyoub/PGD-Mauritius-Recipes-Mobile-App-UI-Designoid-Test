@@ -6,7 +6,9 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -16,15 +18,19 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabPosition
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,50 +39,89 @@ import com.pgd.harrypotter.coreui.theme.HarryPotterTheme
 import com.pgd.harrypotter.domain.R
 import com.pgd.harrypotter.domain.model.Ingredient
 import com.pgd.harrypotter.domain.model.Recipe
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeTabBarItem(
     recipe: Recipe,
 ) {
-    val pagerState = rememberPagerState { 1 }
+    val tabWidth = (LocalConfiguration.current.screenWidthDp / 3).dp - 10.dp
+    val coroutineScope = rememberCoroutineScope()
+    val pagerState =
+        rememberPagerState(pageCount = { 3 })
     val pages = listOf("Ingredients", "Tools", "Steps")
 
     val indicator = @Composable { tabPositions: List<TabPosition> ->
         CustomIndicator(tabPositions, pagerState)
     }
+    Column {
 
-    ScrollableTabRow(
-        modifier = Modifier.height(50.dp),
-        selectedTabIndex = pagerState.currentPage,
-        indicator = indicator
-    ) {
-        pages.forEachIndexed { index, title ->
-            Tab(
-                modifier = Modifier.zIndex(6f),
-                text = {
-                    Text(
-                        text = title,
-                        color = Color.LightGray,
-                        fontSize = 12.sp
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(50))
+                .padding(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        color = Color.White
                     )
-                },
-                selected = pagerState.currentPage == index,
-                onClick = {},
-            )
+                    .clip(RoundedCornerShape(50)),
+            ) {
+                ScrollableTabRow(
+                    modifier = Modifier
+                        .height(45.dp)
+                        .fillMaxWidth()
+                        .background(
+                            color = Color(0xBFF7F7F7),
+                        )
+                        .clip(RoundedCornerShape(50)),
+                    containerColor = Color(0xBFF7F7F7),
+                    edgePadding = 0.dp,
+                    selectedTabIndex = pagerState.currentPage,
+                    indicator = indicator
+                ) {
+                    pages.forEachIndexed { index, title ->
+                        Tab(
+                            modifier = Modifier
+                                .width(tabWidth)
+                                .zIndex(6f),
+                            text = {
+                                Text(
+                                    text = title,
+                                    color = Color.LightGray,
+                                    fontSize = 16.sp
+                                )
+                            },
+                            selected = pagerState.currentPage == index,
+                            onClick = {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(index)
+                                }
+                            },
+                        )
+                    }
+                }
+            }
         }
-    }
 
-
-    HorizontalPager(
-        modifier = Modifier.fillMaxSize(),
-//        beyondBoundsPageCount = pages.size,
-        state = pagerState,
-    ) { page ->
-        when (page) {
-            0 -> IngredientsSection(recipe = recipe)
-            1 -> ToolsSection()
-            2 -> StepsSection()
+        HorizontalPager(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = Color.White
+                ),
+            state = pagerState,
+        ) { page ->
+            when (page) {
+                0 -> IngredientsSection(recipe = recipe)
+                1 -> ToolsSection()
+                2 -> StepsSection()
+            }
         }
     }
 }
@@ -109,6 +154,7 @@ private fun CustomIndicator(tabPositions: List<TabPosition>, pagerState: PagerSt
         tabPositions[it].right
     }
 
+
     Box(
         Modifier
             .offset(x = indicatorStart)
@@ -118,7 +164,7 @@ private fun CustomIndicator(tabPositions: List<TabPosition>, pagerState: PagerSt
             .fillMaxSize()
             .background(
                 color = Color(0xFFB21C55),
-                RoundedCornerShape(50)
+                shape = RoundedCornerShape(50)
             )
             .zIndex(1f)
     )
