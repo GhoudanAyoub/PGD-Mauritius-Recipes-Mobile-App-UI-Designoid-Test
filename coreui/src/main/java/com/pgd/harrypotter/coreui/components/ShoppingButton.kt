@@ -1,5 +1,6 @@
 package com.pgd.harrypotter.coreui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,13 +20,14 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ShoppingButton() {
-    Surface {
+    Surface(color = Color.White) {
             // Content Section
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(80.dp)
                     .padding(16.dp)
+                    .background(Color.White)
             ) {
 
                 // Reviews and Action Button

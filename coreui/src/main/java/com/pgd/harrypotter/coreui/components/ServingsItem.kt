@@ -16,7 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,7 +40,7 @@ import com.pgd.harrypotter.domain.model.Recipe
 fun ServingsItem(
     recipe: Recipe,
 ) {
-    Surface(color = MaterialTheme.colorScheme.background) {
+    Surface(color = Color.White) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier

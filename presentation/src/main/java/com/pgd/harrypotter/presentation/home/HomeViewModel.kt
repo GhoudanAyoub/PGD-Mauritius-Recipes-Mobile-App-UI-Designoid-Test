@@ -9,7 +9,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -29,7 +28,6 @@ class HomeViewModel @Inject constructor(
     private fun getRecipe() {
         viewModelScope.launch {
             getRecipeUseCase.invoke()
-                .distinctUntilChanged()
                 .collect { data ->
                     _RecipeState.value = when (data) {
                         is RecipeRequestState.Loading -> HomeUiState.Loading

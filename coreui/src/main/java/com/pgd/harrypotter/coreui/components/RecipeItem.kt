@@ -30,7 +30,7 @@ import com.pgd.harrypotter.domain.model.Recipe
 fun RecipeItem(
     recipe: Recipe,
 ) {
-    Surface(color = MaterialTheme.colorScheme.background) {
+    Surface(color = Color.White) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
