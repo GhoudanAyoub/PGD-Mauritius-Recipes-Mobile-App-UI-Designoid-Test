@@ -65,6 +65,7 @@ fun HomeScreen(
 
                 is HomeUiState.Success -> {
                     HomeBody(
+                        homeViewModel,
                         (state as HomeUiState.Success).data,
                         scrollState = rememberScrollState(),
                         toolbarOffsetHeightPx = toolbarOffsetHeightPx.value.dp

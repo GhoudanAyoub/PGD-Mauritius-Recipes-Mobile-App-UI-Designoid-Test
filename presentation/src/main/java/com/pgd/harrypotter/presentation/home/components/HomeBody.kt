@@ -13,6 +13,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,20 +21,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pgd.harrypotter.coreui.components.HomeTabBarItem
 import com.pgd.harrypotter.coreui.components.RecipeItem
 import com.pgd.harrypotter.coreui.components.ReviewsSection
 import com.pgd.harrypotter.coreui.components.ServingsItem
 import com.pgd.harrypotter.coreui.components.ShoppingButton
 import com.pgd.harrypotter.domain.model.Recipe
+import com.pgd.harrypotter.presentation.home.HomeViewModel
 import kotlin.math.roundToInt
 
 @Composable
 fun HomeBody(
+    homeViewModel: HomeViewModel,
     recipe: Recipe,
     scrollState: ScrollState,
     toolbarOffsetHeightPx: Dp,
 ) {
+    val timer by homeViewModel.timerState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -59,7 +64,9 @@ fun HomeBody(
                 .padding(8.dp)
         ) {
             FloatingActionButton(
-                onClick = { /* Handle button click */ },
+                onClick = {
+                    homeViewModel.startCooking()
+                },
                 containerColor = Color(0xFFB21C55),
                 elevation = FloatingActionButtonDefaults.elevation(2.dp),
                 modifier = Modifier
@@ -67,7 +74,11 @@ fun HomeBody(
                     .padding(16.dp)
                     .clip(RoundedCornerShape(20.dp))
             ) {
-                Text("Start Cooking", color = Color.White)
+                if (timer == 0) {
+                    Text("Start Cooking", color = Color.White)
+                } else {
+                    Text("Stop Cooking ${timer}", color = Color.White)
+                }
             }
         }
 

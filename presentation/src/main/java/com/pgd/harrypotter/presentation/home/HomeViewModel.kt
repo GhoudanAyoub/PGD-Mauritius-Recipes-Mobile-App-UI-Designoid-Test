@@ -6,6 +6,8 @@ import com.pgd.harrypotter.domain.usecase.recipe.GetRecipeUseCase
 import com.pgd.harrypotter.domain.usecase.recipe.RecipeRequestState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,6 +21,10 @@ class HomeViewModel @Inject constructor(
     private val _RecipeState: MutableStateFlow<HomeUiState> =
         MutableStateFlow(HomeUiState.Idle)
     val recipeState: StateFlow<HomeUiState> = _RecipeState.asStateFlow()
+
+    private val _timerState: MutableStateFlow<Int> =
+        MutableStateFlow(0)
+    val timerState: StateFlow<Int> = _timerState.asStateFlow()
 
 
     init {
@@ -38,6 +44,15 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                 }
+        }
+    }
+
+    fun startCooking() {
+        viewModelScope.launch {
+            while (true) {
+                delay(1.seconds)
+                _timerState.value = ++_timerState.value
+            }
         }
     }
 }
